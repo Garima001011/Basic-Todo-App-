@@ -1,12 +1,15 @@
-const input     = document.getElementById("input");
-const list      = document.getElementById("list");
-const empty     = document.getElementById("empty");
-const addBtn    = document.getElementById("add");
-const clearBtn  = document.getElementById("clear");
-const filters   = document.querySelectorAll(".filter");
-const leftSpan  = document.getElementById("leftCount");
-const doneSpan  = document.getElementById("doneCount");
-const dateBox   = document.getElementById("date");
+const input      = document.getElementById("input");
+const list       = document.getElementById("list");
+const empty      = document.getElementById("empty");
+const addBtn     = document.getElementById("add");
+const clearBtn   = document.getElementById("clear");
+const filters    = document.querySelectorAll(".filter");
+const leftSpan   = document.getElementById("leftCount");
+const doneSpan   = document.getElementById("doneCount");
+const dateBox    = document.getElementById("date");
+const dateInput  = document.getElementById("dateInput");
+const startInput = document.getElementById("startInput");
+const endInput   = document.getElementById("endInput");
 
 let currentFilter = "all";
 
@@ -17,11 +20,32 @@ function setToday() {
 }
 
 function getItems() {
-  return JSON.parse(localStorage.todo || "[]");
+  return JSON.parse(localStorage.todoPink || "[]");
 }
 
 function saveItems(items) {
-  localStorage.todo = JSON.stringify(items);
+  localStorage.todoPink = JSON.stringify(items);
+}
+
+function formatDate(d) {
+  if (!d) return "";
+  try {
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return "";
+    return date.toLocaleDateString(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric"
+    });
+  } catch {
+    return "";
+  }
+}
+
+function formatTimeRange(start, end) {
+  if (!start && !end) return "";
+  if (start && end) return `${start} – ${end}`;
+  return start || end || "";
 }
 
 function render() {
@@ -38,13 +62,24 @@ function render() {
     empty.style.display = "block";
   } else {
     empty.style.display = "none";
-    visible.forEach((t, i) => {
+    visible.forEach(t => {
       const li = document.createElement("li");
       li.className = t.done ? "done" : "";
 
+      const dateText = formatDate(t.date);
+      const timeText = formatTimeRange(t.startTime, t.endTime);
+      let meta = "";
+
+      if (dateText && timeText) meta = `${dateText} • ${timeText}`;
+      else if (dateText) meta = dateText;
+      else if (timeText) meta = timeText;
+
       li.innerHTML = `
         <input type="checkbox" data-id="${t.id}" ${t.done ? "checked" : ""}>
-        <div class="text">${t.text}</div>
+        <div class="task-body">
+          <div class="text">${t.text}</div>
+          ${meta ? `<div class="meta">${meta}</div>` : ""}
+        </div>
         <button class="clear-btn" data-del="${t.id}">✕</button>
       `;
       list.appendChild(li);
@@ -61,14 +96,23 @@ function addTask() {
   const text = input.value.trim();
   if (!text) return;
 
-  const items = getItems();
-  items.unshift({
+  const newItem = {
     id: Date.now(),
     text,
-    done: false
-  });
+    done: false,
+    date: dateInput.value || "",
+    startTime: startInput.value || "",
+    endTime: endInput.value || ""
+  };
+
+  const items = getItems();
+  items.unshift(newItem);
   saveItems(items);
+
   input.value = "";
+  startInput.value = "";
+  endInput.value = "";
+  // keep selected date so you can add multiple tasks for same day
   input.focus();
   render();
 }

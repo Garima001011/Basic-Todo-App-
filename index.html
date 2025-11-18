@@ -8,9 +8,12 @@
 <body>
 <div class="app">
     <header class="top">
-        <div>
-            <h1>Today’s Tasks</h1>
-            <p class="subtitle">Plan it. Do it. Done.</p>
+        <div class="title-row">
+            <span class="heart">❤</span>
+            <div>
+                <h1>To Do List</h1>
+                <p class="subtitle">Planner for busy days</p>
+            </div>
         </div>
         <div class="pill" id="date"></div>
     </header>
@@ -19,10 +22,16 @@
         <input
                 id="input"
                 type="text"
-                placeholder="Type a task and press Enter…"
+                placeholder="What do you need to do?"
                 autocomplete="off"
                 autofocus
         >
+    </div>
+
+    <div class="row row-meta">
+        <input id="dateInput" type="date" title="Date">
+        <input id="startInput" type="time" title="Start time">
+        <input id="endInput" type="time" title="End time">
         <button id="add">Add</button>
     </div>
 
@@ -33,7 +42,7 @@
     </div>
 
     <ul id="list"></ul>
-    <div class="empty" id="empty">No tasks yet. Add your first one above.</div>
+    <div class="empty" id="empty">No tasks yet. Add an exciting plan above ✨</div>
 
     <footer class="footer">
         <div class="stats">
