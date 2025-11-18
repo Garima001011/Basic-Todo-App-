@@ -1,28 +1,49 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Todo</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <title>Basic Todo App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <h1>
-      Tasks
-      <span id="summary">0 left</span>
-    </h1>
-    <div class="row">
-      <input id="input" type="text" placeholder="Add a task and hit Enter…" autocomplete="off">
-      <button id="add">Add</button>
-    </div>
-    <ul id="list"></ul>
-    <div class="empty" id="empty">Nothing here yet. Add your first task.</div>
-    <div class="footer">
-      <div><strong>Todo</strong> • ultra-minimal</div>
-      <button class="del" id="clear">Clear done</button>
-    </div>
-  </div>
+<div class="app">
+    <header class="top">
+        <div>
+            <h1>Today’s Tasks</h1>
+            <p class="subtitle">Plan it. Do it. Done.</p>
+        </div>
+        <div class="pill" id="date"></div>
+    </header>
 
-  <script src="script.js"></script>
+    <div class="row">
+        <input
+                id="input"
+                type="text"
+                placeholder="Type a task and press Enter…"
+                autocomplete="off"
+                autofocus
+        >
+        <button id="add">Add</button>
+    </div>
+
+    <div class="filters">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="active">Active</button>
+        <button class="filter" data-filter="done">Done</button>
+    </div>
+
+    <ul id="list"></ul>
+    <div class="empty" id="empty">No tasks yet. Add your first one above.</div>
+
+    <footer class="footer">
+        <div class="stats">
+            <span id="leftCount">0 left</span> •
+            <span id="doneCount">0 done</span>
+        </div>
+        <button class="clear-btn" id="clear">Clear completed</button>
+    </footer>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
