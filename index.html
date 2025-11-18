@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Todo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <h1>
+      Tasks
+      <span id="summary">0 left</span>
+    </h1>
+    <div class="row">
+      <input id="input" type="text" placeholder="Add a task and hit Enter…" autocomplete="off">
+      <button id="add">Add</button>
+    </div>
+    <ul id="list"></ul>
+    <div class="empty" id="empty">Nothing here yet. Add your first task.</div>
+    <div class="footer">
+      <div><strong>Todo</strong> • ultra-minimal</div>
+      <button class="del" id="clear">Clear done</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
